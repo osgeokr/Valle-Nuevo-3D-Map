@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#003876" />
+  <title>Valle Nuevo 3D | Mapa del parque</title>
+  <meta name="description" content="Mapa 3D y 2D del Parque Nacional Valle Nuevo para reuniones comunitarias y guardaparques: límite del parque, zona quemada 2026, ríos, caminos y poblados." />
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/lib/maplibre-gl.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="gov-strip">
+    <span class="gov-dot" aria-hidden="true"></span>
+    <span data-i18n="gov">Mapa de trabajo, no es una publicación oficial del gobierno</span>
+  </div>
+
+  <header class="site-header">
+    <div class="logos" aria-label="MMARN, KOICA, KNPS">
+      <img src="assets/img/logo_mmarn.png" alt="Ministerio de Medio Ambiente y Recursos Naturales" class="logo logo-mmarn" />
+      <img src="assets/img/logo_koica.png" alt="KOICA" class="logo logo-koica" />
+      <img src="assets/img/logo_knps.png" alt="Korea National Park Service" class="logo logo-knps" />
+    </div>
+    <div class="header-title">
+      <h1 data-i18n="title">Parque Nacional Valle Nuevo</h1>
+      <p data-i18n="subtitle">Mapa para reuniones con la comunidad y guardaparques</p>
+    </div>
+    <div class="lang-switch" role="group" aria-label="Idioma / Language">
+      <button class="lang-btn is-active" data-lang="es">ES</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </header>
+
+  <main class="app">
+    <div id="map" role="region" aria-label="Mapa"></div>
+
+    <!-- map buttons (top right) -->
+    <div class="map-tools">
+      <div class="seg" role="group" aria-label="3D / 2D">
+        <button class="seg-btn is-on" data-view="3d">3D</button>
+        <button class="seg-btn" data-view="2d">2D</button>
+      </div>
+      <div class="seg" role="group" aria-label="Base">
+        <button class="seg-btn is-on" data-base="sat" data-i18n="base.sat">Satélite</button>
+        <button class="seg-btn" data-base="topo" data-i18n="base.topo">Mapa</button>
+      </div>
+    </div>
+
+    <!-- panel: bottom sheet on phones, side panel on desktop -->
+    <section class="sheet" id="sheet" aria-label="Panel">
+      <button class="sheet-handle" id="sheetHandle" aria-label="Abrir o cerrar panel"><span></span></button>
+
+      <div class="sheet-head">
+        <h2 data-i18n="goto">Ir a un lugar</h2>
+        <p class="hint" data-i18n="gotoHint">Toque un botón para mover el mapa.</p>
+      </div>
+      <div class="places" id="places"></div>
+
+      <div class="sheet-body">
+        <div class="fact">
+          <div class="fact-num"><span id="factLaCueva">1,520</span> ha</div>
+          <div class="fact-lab" data-i18n="factLab">quemadas en el incendio de La Cueva (agosto 2026), dentro del parque</div>
+        </div>
+
+        <h3 data-i18n="layers">Capas del mapa</h3>
+        <div class="layers" id="layers"></div>
+
+        <details class="about">
+          <summary data-i18n="aboutT">Sobre este mapa</summary>
+          <div data-i18n-html="aboutB"></div>
+        </details>
+      </div>
+    </section>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="nogl" id="nogl" hidden>
+      <p data-i18n="nogl">Este teléfono no puede mostrar el mapa 3D. Pruebe con Chrome actualizado.</p>
+    </div>
+  </main>
+
+  <script src="assets/lib/maplibre-gl.js"></script>
+  <script src="data/data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
