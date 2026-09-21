@@ -1,0 +1,154 @@
+/* Valle Nuevo 3D: layout and palette follow DR-30x30-Monitor (Dominican Design System + MMARN) */
+:root{
+  --blue:#003876; --blue-600:#0a4a94; --blue-050:#eaf1fb;
+  --green:#2c7a52; --green-050:#eaf5ee;
+  --red:#ce1126;
+  --ink:#182635; --muted:#5b6b7b; --line:#dde5ee; --bg:#f3f6fa; --white:#fff;
+  --burn:#ff5a1f; --burn-line:#b3261e; --park:#ffd23f; --river:#4fc3f7; --road:#ffffff; --pa:#9be39f;
+  --shadow:0 6px 24px rgba(16,42,67,.16); --radius:14px;
+  --strip:26px; --head:58px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg)}
+body{font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);
+  -webkit-font-smoothing:antialiased;overflow:hidden;height:100dvh}
+h1,h2,h3,.seg-btn,.place b,.fact-num,.lang-btn{font-family:"Poppins",system-ui,sans-serif}
+button{font:inherit;color:inherit}
+
+/* government strip */
+.gov-strip{height:var(--strip);background:var(--blue);color:#cfe0f5;font-size:11.5px;display:flex;align-items:center;
+  gap:8px;padding:0 14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gov-dot{flex:0 0 8px;height:8px;border-radius:50%;background:#e8b923;box-shadow:0 0 0 3px rgba(232,185,35,.25)}
+
+/* header with the three logos in order MMARN, KOICA, KNPS */
+.site-header{height:var(--head);background:var(--white);border-bottom:1px solid var(--line);display:flex;align-items:center;
+  gap:14px;padding:0 12px;position:relative;z-index:5}
+.logos{display:flex;align-items:center;gap:12px;flex:0 1 auto;min-width:0}
+.logo{display:block;height:26px;width:auto}
+.logo-koica{height:17px}
+.header-title{flex:1 1 auto;min-width:0;border-left:1px solid var(--line);padding-left:14px}
+.header-title h1{margin:0;font-size:17px;font-weight:600;color:var(--blue);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.header-title p{margin:1px 0 0;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lang-switch{display:flex;gap:4px;flex:0 0 auto;margin-left:auto}
+.lang-btn{border:1px solid var(--line);background:#fff;color:var(--muted);font-size:12px;font-weight:600;padding:6px 9px;border-radius:8px;cursor:pointer}
+.lang-btn.is-active{background:var(--blue);border-color:var(--blue);color:#fff}
+
+/* map area */
+.app{position:relative;height:calc(100dvh - var(--strip) - var(--head))}
+#map{position:absolute;inset:0}
+.maplibregl-ctrl-attrib{font-size:10px}
+@media (max-width:899px){
+  .maplibregl-ctrl-attrib.maplibregl-compact-show:not(.user-open){padding:2px 24px 2px 0}
+  .maplibregl-ctrl-attrib.maplibregl-compact-show:not(.user-open) .maplibregl-ctrl-attrib-inner{display:none}
+}
+
+.map-tools{position:absolute;top:10px;left:10px;z-index:3;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.seg{display:flex;background:rgba(255,255,255,.96);border-radius:12px;box-shadow:var(--shadow);padding:3px}
+.seg-btn{border:0;background:transparent;min-width:52px;height:40px;padding:0 12px;border-radius:9px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
+.seg-btn.is-on{background:var(--blue);color:#fff}
+
+/* bottom sheet (phones) */
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:4;background:var(--white);border-radius:18px 18px 0 0;box-shadow:0 -6px 24px rgba(16,42,67,.18);
+  max-height:62%;display:flex;flex-direction:column;transition:transform .25s ease;padding-bottom:env(safe-area-inset-bottom)}
+.sheet.is-collapsed .sheet-body{display:none}
+.sheet-handle{border:0;background:transparent;width:100%;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto}
+.sheet-handle span{width:44px;height:5px;border-radius:3px;background:#c9d3de}
+.sheet-head{padding:0 16px 6px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.sheet-head h2{margin:0;font-size:16px;font-weight:600;color:var(--blue)}
+.hint{margin:0;font-size:12px;color:var(--muted)}
+
+.places{display:flex;gap:8px;overflow-x:auto;padding:2px 16px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;flex:0 0 auto}
+.places::-webkit-scrollbar{display:none}
+.place{flex:0 0 auto;scroll-snap-align:start;display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:#fff;
+  border-radius:12px;padding:9px 13px 9px 10px;min-height:52px;cursor:pointer;text-align:left}
+.place:active{transform:scale(.98)}
+.place.is-on{border-color:var(--blue);background:var(--blue-050)}
+.place i{flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:15px;background:var(--green-050)}
+.place i.fire{background:#ffe6dc}
+.place b{display:block;font-size:13.5px;font-weight:600;line-height:1.2;color:var(--ink);white-space:nowrap}
+.place small{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap}
+
+.sheet-body{overflow-y:auto;padding:0 16px 14px;flex:1 1 auto;-webkit-overflow-scrolling:touch}
+.fact{display:flex;align-items:center;gap:12px;background:#fff4ef;border:1px solid #ffd3c2;border-radius:12px;padding:10px 12px;margin:2px 0 12px}
+.fact-num{font-size:22px;font-weight:700;color:var(--burn-line);white-space:nowrap}
+.fact-lab{font-size:12.5px;color:#6b3a2c;line-height:1.35}
+.sheet-body h3{margin:4px 0 6px;font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.layers{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.layer{display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:10px;padding:9px 10px;min-height:44px;cursor:pointer;font-size:13px;background:#fff;user-select:none}
+.layer input{position:absolute;opacity:0;pointer-events:none}
+.layer .sw{flex:0 0 22px;height:14px;border-radius:3px}
+.layer .chk{margin-left:auto;width:18px;height:18px;border-radius:5px;border:2px solid #b8c4d1;display:grid;place-items:center}
+.layer input:checked ~ .chk{background:var(--blue);border-color:var(--blue)}
+.layer input:checked ~ .chk::after{content:"";width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.layer input:not(:checked) ~ .sw{opacity:.35}
+.sw.burn{background:var(--burn);box-shadow:inset 0 0 0 2px var(--burn-line)}
+.sw.park{background:transparent;box-shadow:inset 0 0 0 3px var(--park),0 0 0 1px #6b5a00}
+.sw.rivers{background:linear-gradient(transparent 5px,var(--river) 5px,var(--river) 9px,transparent 9px)}
+.sw.roads{background:linear-gradient(transparent 4px,#8a8a8a 4px,#fff 5px,#fff 9px,#8a8a8a 9px,transparent 10px)}
+.sw.places{background:radial-gradient(circle,#fff 3px,var(--ink) 4px,transparent 5px)}
+.sw.pa{background:rgba(155,227,159,.35);box-shadow:inset 0 0 0 2px var(--pa)}
+.about{margin-top:12px;font-size:12.5px;color:var(--muted);line-height:1.5}
+.about summary{cursor:pointer;font-weight:600;color:var(--blue-600);padding:6px 0}
+.about p{margin:6px 0}
+
+/* map labels (HTML markers, no font server needed) */
+.lbl{font:600 12px/1.1 "Open Sans",system-ui,sans-serif;color:#fff;text-shadow:0 0 3px #000,0 0 6px rgba(0,0,0,.8);white-space:nowrap;pointer-events:none;
+  display:flex;align-items:center;gap:5px}
+.lbl::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px var(--ink)}
+.lbl.town{font-size:14px}
+.lbl.peak::before{width:0;height:0;border-radius:0;background:none;box-shadow:none;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:11px solid #fff;filter:drop-shadow(0 0 1px #000)}
+.lbl.fire{font-size:13px;color:#fff;background:rgba(179,38,30,.92);padding:4px 8px 4px 6px;border-radius:999px;text-shadow:none;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.lbl.fire::before{content:"🔥";width:auto;height:auto;background:none;box-shadow:none;font-size:13px}
+.lbl.is-hidden{display:none}
+
+.maplibregl-popup{z-index:5}
+.maplibregl-popup-content{border-radius:12px;padding:12px 14px;font-size:13px;box-shadow:var(--shadow)}
+.pop-t{font-family:"Poppins",sans-serif;font-weight:600;color:var(--burn-line);margin-bottom:4px}
+.pop-r{color:var(--muted)} .pop-r b{color:var(--ink)}
+
+.toast{position:absolute;left:50%;top:12px;transform:translate(-50%,-20px);background:rgba(24,38,53,.92);color:#fff;font-size:13px;padding:8px 14px;
+  border-radius:999px;opacity:0;transition:.25s;z-index:6;pointer-events:none;max-width:88%;text-align:center}
+.toast.is-on{opacity:1;transform:translate(-50%,0)}
+[hidden]{display:none !important}
+.nogl{position:absolute;inset:0;display:grid;place-items:center;background:var(--bg);z-index:7;padding:24px;text-align:center}
+
+/* narrow phones: hide title text, keep logos */
+@media (max-width:640px){
+  :root{--head:50px}
+  .header-title{display:none}
+  .logos{gap:10px}
+  .logo{height:22px}
+  .logo-koica{height:14px}
+  .map-tools{top:8px;left:8px}
+  .seg-btn{min-width:46px;height:38px;padding:0 10px;font-size:13px}
+}
+@media (max-width:360px){
+  .logos{gap:7px}
+  .logo{height:19px}
+  .logo-koica{height:12px}
+}
+
+/* tablets and desktop: side panel */
+@media (min-width:900px){
+  :root{--head:66px}
+  .logo{height:32px} .logo-koica{height:21px}
+  .header-title h1{font-size:19px}
+  .sheet{top:12px;bottom:12px;left:12px;right:auto;width:360px;max-height:none;border-radius:var(--radius);box-shadow:var(--shadow)}
+  .sheet-handle{display:none}
+  .sheet.is-collapsed .sheet-body{display:block}
+  .places{flex-wrap:wrap;overflow:visible;padding-bottom:14px}
+  .place{flex:1 1 calc(50% - 8px)}
+  .map-tools{left:auto;right:56px;top:12px;flex-direction:row}
+}
+
+/* Villa Poppy highlight */
+.vp{position:relative;width:44px;height:44px;border:0;padding:0;background:none;cursor:pointer}
+.vp-ring{position:absolute;inset:0;border-radius:50%;background:rgba(255,210,63,.45);box-shadow:0 0 0 3px #ffd23f;animation:vpPulse 1.8s ease-out infinite}
+.vp-dot{position:absolute;left:8px;top:8px;width:28px;height:28px;border-radius:50%;background:#003876;border:3px solid #ffd23f;display:grid;place-items:center;font-size:14px;line-height:1}
+.vp-name{position:absolute;left:50%;top:48px;transform:translateX(-50%);white-space:nowrap;background:#003876;color:#fff;font:700 13px/1 "Poppins",system-ui,sans-serif;
+  padding:5px 9px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.35);border:2px solid #ffd23f}
+@keyframes vpPulse{0%{transform:scale(.7);opacity:1}100%{transform:scale(1.9);opacity:0}}
+@media (prefers-reduced-motion:reduce){.vp-ring{animation:none}}
+.place.star{border-color:#ffd23f;background:#fffbea}
+.place.star i{background:#003876}
+.vp-t{color:var(--blue)}
