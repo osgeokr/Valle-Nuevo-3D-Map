@@ -17,8 +17,8 @@
   var VILLA_POPPY = [-70.72652, 18.86779];
   var SKETCH_BOUNDS = [-70.742, 18.840, -70.711, 18.873];
   var PLACES = [
-    { id: "sketch", icon: "🏠", star: true, bounds: SKETCH_BOUNDS, pitch: 60, bearing: 0, zoomAdj: 0 },
-    { id: "park", icon: "🏞️", bounds: V.park, pitch: 55, bearing: -15 },
+    { id: "sketch", icon: "🏠", star: true, bounds: SKETCH_BOUNDS, pitch: 45, bearing: 0 },
+    { id: "park", icon: "🏞️", bounds: V.park, pitch: 55, bearing: -15, shift: 0.12, zoomOut: 0.2 },
     { id: "lacueva", icon: "🔥", fire: true, bounds: V.lacueva, pitch: 62, bearing: 10 },
     { id: "canadaseca", icon: "🔥", fire: true, bounds: V.canadaseca, pitch: 60, bearing: -20 },
     { id: "constanza", icon: "🏘️", center: V["Constanza"], zoom: 13.2, pitch: 55, bearing: 150 },
@@ -86,7 +86,7 @@
   var map;
   try {
     map = new maplibregl.Map({
-      container: "map", style: style, center: bboxCenter(SKETCH_BOUNDS), zoom: 13.3, pitch: 60, bearing: 0,
+      container: "map", style: style, center: [VILLA_POPPY[0], 18.866], zoom: 12.9, pitch: 45, bearing: 0,
       maxPitch: 75, attributionControl: false, fadeDuration: 150, maxTileCacheSize: 120,
     });
   } catch (e) { $("#nogl").hidden = false; return; }
@@ -113,8 +113,15 @@
     if (p.zoom) o.maxZoom = is3d ? p.zoom : p.zoom + 0.3;
     var cam = map.cameraForBounds(box, o) || map.cameraForBounds(box, { bearing: bearing, maxZoom: o.maxZoom });
     if (!cam) return;
-    var adj = p.zoomAdj !== undefined ? p.zoomAdj : (is3d && p.bounds ? 0.3 : 0);
-    var opts = { center: cam.center, zoom: cam.zoom + (is3d ? adj : 0), pitch: pitch, bearing: bearing };
+    var opts = { center: cam.center, zoom: cam.zoom, pitch: pitch, bearing: bearing };
+    if (is3d && p.bounds) {
+      // With 3D relief the camera sits low, so nearby ridges hide the target:
+      // zoom out a little and move the look-at point forward (in the view direction).
+      var c = maplibregl.LngLat.convert(cam.center), br = bearing * Math.PI / 180;
+      var shift = p.shift !== undefined ? p.shift : 0.3;
+      opts.center = [c.lng + Math.sin(br) * shift * (b[2] - b[0]), c.lat + Math.cos(br) * shift * (b[3] - b[1])];
+      opts.zoom = cam.zoom - (p.zoomOut !== undefined ? p.zoomOut : 0.5);
+    }
     if (instant) map.jumpTo(opts); else map.flyTo(Object.assign(opts, { duration: 2600, essential: true, curve: 1.3 }));
   }
 
